@@ -23,9 +23,10 @@ const data = {
 You can generate an inferred Cap'n Proto schema:
 
 ```js
-> const schema = generateSchema('Person', data)
-> console.log(schema)
+const schema = generateSchema('Person', data)
+console.log(schema)
 ```
+
 ```c
 @0xe3603ad8685d0f0c;
 
@@ -44,10 +45,11 @@ struct PersonFriendsItem {
 And an accompanying setter function:
 
 ```js
-> const defs = generateDefinitions('Person', data)
-> const setter = generateSetterFunction('Person', data, defs)
-> console.log(setter)
+const defs = generateDefinitions('Person', data)
+const setter = generateSetterFunction('Person', data, defs)
+console.log(setter)
 ```
+
 ```js
 function setter(capnp, schemaClass, data) {
   const message = new capnp.Message();
