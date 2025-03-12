@@ -24,6 +24,7 @@ You can generate an inferred Cap'n Proto schema:
 
 ```js
 const schema = generateSchema('Person', data)
+
 console.log(schema)
 ```
 
@@ -47,6 +48,7 @@ And an accompanying setter function:
 ```js
 const defs = generateDefinitions('Person', data)
 const setter = generateSetterFunction('Person', data, defs)
+
 console.log(setter)
 ```
 
