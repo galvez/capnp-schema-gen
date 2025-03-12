@@ -46,8 +46,7 @@ struct PersonFriendsItem {
 And an accompanying setter function:
 
 ```js
-const defs = generateDefinitions('Person', data)
-const setter = generateSetterFunction('Person', data, defs)
+const setter = generateSetterFunction(data)
 
 console.log(setter)
 ```

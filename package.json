@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "lint": "oxlint ."
+  },
   "type": "module",
   "name": "capnp-schema-gen",
   "description": "A Cap'n Proto schema and setter function generator.",
@@ -9,5 +12,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/galvez/capnp-schema-gen.git"
+  },
+  "devDependencies": {
+    "oxlint": "^0.15.14"
   }
 }

@@ -15,8 +15,7 @@ test('generate basic schema', () => {
     withoutID(readFileSync(join(fixturesPath, 'basic.capnp'), 'utf8')),
     withoutID(schema)
   )
-  const defs = generateDefinitions('Person', basic)
-  const setter = generateSetterFunction('Person', basic, defs)
+  const setter = generateSetterFunction(basic)
   equal(
     readFileSync(join(fixturesPath, 'basic.setter.js'), 'utf8'),
     setter

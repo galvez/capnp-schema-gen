@@ -38,7 +38,7 @@ export function generateSchema (rootName, json) {
 }
 
 // Generate the setter function for the Cap'n Proto schema
-export function generateSetterFunction(rootName, json, structDefinitions) {
+export function generateSetterFunction(json) {
   let code = `function setter(capnp, schemaClass, data) {
   const message = new capnp.Message();
   const obj = message.initRoot(schemaClass);
@@ -101,7 +101,7 @@ function generateSetterBody(obj, objVarName, dataVarName, indentLevel, depth = 0
       code += generateSetterBody(value, nestedObjName, `${dataVarName}.${key}`, indentLevel, depth)
     } else {
       // Primitives
-      code += `${indent}if (typeof ${dataVarName}.${key} !== \'undefined\') {\n`
+      code += `${indent}if (typeof ${dataVarName}.${key} !== 'undefined') {\n`
       code += `${indent}  ${objVarName}.${key} = ${dataVarName}.${key};\n`
       code += `${indent}}\n`
     }
