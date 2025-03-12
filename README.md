@@ -1,0 +1,1 @@
+# capnp-schema-gen
