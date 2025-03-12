@@ -5,5 +5,9 @@
   "main": "index.js",
   "author": "Jonas Galvez <jonasgalvez@gmail.com>",
   "license": "MIT",
-  "version": "0.1.0"
+  "version": "0.2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/galvez/capnp-schema-gen.git"
+  }
 }
