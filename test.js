@@ -1,9 +1,9 @@
 import { test } from 'node:test'
 import { equal } from 'node:assert'
-import { readFileSync, writeFileSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
 import { resolve, join } from 'node:path' 
 
-import { generateDefinitions, generateSchema, generateSetterFunction } from './index.js'
+import { generateSchema, generateSetterFunction } from './index.js'
 
 import basic from './fixtures/basic.js'
 

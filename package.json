@@ -2,13 +2,16 @@
   "scripts": {
     "lint": "oxlint ."
   },
+  "bin": {
+    "capnp-schema-gen": "./bin/index.js"
+  },
   "type": "module",
   "name": "capnp-schema-gen",
   "description": "A Cap'n Proto schema and setter function generator.",
   "main": "index.js",
   "author": "Jonas Galvez <jonasgalvez@gmail.com>",
   "license": "MIT",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/galvez/capnp-schema-gen.git"
