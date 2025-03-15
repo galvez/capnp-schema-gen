@@ -1,9 +1,19 @@
 #!/usr/bin/env node
 
-import { readFileSync } from 'fs'
-import { generateSchema } from '../index.js'
+import { readFileSync } from 'node:fs'
+import { generateSetterFunction, generateSchema } from '../index.js'
 
-async function processInput(entity, source) {
+async function processInputSetter(generateSetter, source) {
+  try {
+    const setter = generateSetter(JSON.parse(source))
+    console.log(setter)
+  } catch (error) {
+    console.error('Error generating setter:', error.message)
+    process.exit(1)
+  }
+}
+
+async function processInputSchema(generateSchema, entity, source) {
   try {
     const schema = generateSchema(entity, JSON.parse(source))
     console.log(schema)
@@ -22,12 +32,22 @@ async function readStream(stream) {
 }
 
 async function main() {
-  const [filePath, entity] = process.argv.slice(2,4)
+  const argv = process.argv.slice()
+  const setter = argv.findIndex(_ => _ === '--setter')
+  if (setter !== -1) {
+    argv.splice(setter, 1)
+    printSetter(generateSetterFunction, argv)
+  } else {
+    printSchema(generateSchema, argv)
+  }
+}
 
-  if (filePath && entity) {
+async function printSetter (generateSetterFunction, argv) {
+  const filePath = argv[2]
+  if (filePath) {
     try {
       const fileContent = readFileSync(filePath, 'utf8')
-      await processInput(entity, fileContent)
+      await processInputSetter(generateSetterFunction, fileContent)
     } catch (error) {
       console.error(`Error reading file ${filePath}:`, error.message)
       process.exit(1)
@@ -38,17 +58,43 @@ async function main() {
       showUsage()
     }
     const stdinContent = await readStream(process.stdin)
-    await processInput(entity, stdinContent)
+    await processInputSetter(generateSetterFunction, stdinContent)
   } else {
     showUsage()
   }
 }
 
+async function printSchema (generateSchema, argv) {
+  const [filePath, entity] = argv.slice(2,4)
+  if (filePath && entity) {
+    try {
+      const fileContent = readFileSync(filePath, 'utf8')
+      await processInputSchema(generateSchema, entity, fileContent)
+    } catch (error) {
+      console.error(`Error reading file ${filePath}:`, error.message)
+      process.exit(1)
+    }
+  } else if (!process.stdin.isTTY) {
+    const entity = process.argv[2]
+    if (!entity) {
+      showUsage()
+    }
+    const stdinContent = await readStream(process.stdin)
+    await processInputSchema(generateSchema, entity, stdinContent)
+  } else {
+    showUsage()
+  }
+}
+
+
 function showUsage () {
   console.log('Usage:')
-  console.log('  capnp-schema-gen [file]')
-  console.log('  cat file | capnp-schema-gen')
+  console.log('  capnp-schema-gen [file] [Entity]')
+  console.log('  cat file | capnp-schema-gen [Entity]')
+  console.log('  capnp-schema-gen --setter [file]')
+  console.log('  cat file | capnp-schema-gen --setter')
+
   process.exit(0)
 }
 
-await main()
+main()
